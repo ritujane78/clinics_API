@@ -1,9 +1,8 @@
 package com.jane.clinicsAPI.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Patient {
@@ -14,9 +13,8 @@ public class Patient {
   private String lastName;
   private int age;
 
-  @ManyToOne
-  @JoinColumn(name = "patient_id", nullable = false)
-  private Patient patient;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient", fetch = FetchType.EAGER)
+  private List<ClinicalData> clinicalData;
 
   public int getId() {
     return id;

@@ -6,16 +6,19 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
+@Table(name = "clinicaldata")
 public class ClinicalData {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   private String componentName;
   private String componentValue;
   private Timestamp measuredDateTime;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "patient", fetch = FetchType.EAGER)
-  private List<ClinicalData> clinicalData;
+  @ManyToOne
+  @JoinColumn(name = "patient_id", nullable = false)
+  private Patient patient;
 
   public int getId() {
     return id;
