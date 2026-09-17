@@ -12,6 +12,7 @@ import static com.jane.clinicsAPI.util.BMICalculator.calculateBMI;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class PatientController {
   Map<String, String> filters = new HashMap<>();
   private PatientRepository patientRepository;

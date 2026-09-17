@@ -15,6 +15,7 @@ import static com.jane.clinicsAPI.util.BMICalculator.calculateBMI;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ClinicalDataController {
 
   private ClinicalDataRepository clinicalDataRepository;
