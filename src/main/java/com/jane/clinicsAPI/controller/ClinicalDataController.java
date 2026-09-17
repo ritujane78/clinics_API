@@ -5,10 +5,13 @@ import com.jane.clinicsAPI.model.ClinicalData;
 import com.jane.clinicsAPI.model.Patient;
 import com.jane.clinicsAPI.repository.ClinicalDataRepository;
 import com.jane.clinicsAPI.repository.PatientRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.jane.clinicsAPI.util.BMICalculator;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.jane.clinicsAPI.util.BMICalculator.calculateBMI;
 
 @RestController
 @RequestMapping("/api")
@@ -32,5 +35,20 @@ public class ClinicalDataController {
     clinicalData.setPatient(patient);
 
     return clinicalDataRepository.save(clinicalData);
+  }
+
+  @GetMapping("/clinicals/{id}/{componentName}")
+  public List<ClinicalData> getClinicalData(@PathVariable("id") int patientId,
+                                            @PathVariable("componentName") String componentName) {
+//    Patient patient = patientRepository.findById(patientId).get();
+    if(componentName.equalsIgnoreCase("bmi")){
+      componentName = "hw";
+    }
+    List<ClinicalData> clinicalData = clinicalDataRepository.findByIdAndComponentNameOrderByMeasuredDateTime(patientId, componentName);
+    List<ClinicalData> duplicateClinicalData = new ArrayList<>(clinicalData);
+    for (ClinicalData eachEntry : duplicateClinicalData) {
+      calculateBMI(eachEntry, clinicalData);
+    }
+    return clinicalData;
   }
 }
