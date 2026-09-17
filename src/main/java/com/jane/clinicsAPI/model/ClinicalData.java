@@ -1,5 +1,6 @@
 package com.jane.clinicsAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -18,6 +19,7 @@ public class ClinicalData {
 
   @ManyToOne
   @JoinColumn(name = "patient_id", nullable = false)
+  @JsonIgnore
   private Patient patient;
 
   public Patient getPatient() {
