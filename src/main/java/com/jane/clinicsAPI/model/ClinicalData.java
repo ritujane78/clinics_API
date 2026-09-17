@@ -20,6 +20,14 @@ public class ClinicalData {
   @JoinColumn(name = "patient_id", nullable = false)
   private Patient patient;
 
+  public Patient getPatient() {
+    return patient;
+  }
+
+  public void setPatient(Patient patient) {
+    this.patient = patient;
+  }
+
   public int getId() {
     return id;
   }
